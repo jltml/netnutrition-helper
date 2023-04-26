@@ -48,7 +48,7 @@ jobs:
           ls -la
       - name: Run script and export HTML file
         run: |
-          ruby netnutrition-helper.rb North | ansifilter --html -o ./output/index.html
+          bundle exec ruby netnutrition-helper.rb North | ansifilter --html -o ./output/index.html
       # ----------------------------------------------------Deploy
       # - name: Deploy to GitHub Pages
       #   uses: peaceiris/actions-gh-pages@v1.1.0
