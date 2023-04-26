@@ -30,8 +30,9 @@ jobs:
           gem update bundler
           bundle config set without 'development'
           bundle install --jobs 4 --retry 3
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+      # ----------------------------------------------------Chrome
+      - uses: browser-actions/setup-chrome@v1
+      - name: Chrome version
         run: chrome --version
       - name: Install ansifilter
         run: |
