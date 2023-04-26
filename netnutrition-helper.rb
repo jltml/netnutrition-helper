@@ -89,9 +89,13 @@ elsif today == "Sunday"
   end
 end
 
-prompt = TTY::Prompt.new
-hall = prompt.select("Please choose a dining hall:", %w[North South])
-# hall = "North"
+hall = ARGV.first if ARGV.first
+# current_meal = "Lunch"
+unless hall
+  prompt = TTY::Prompt.new
+  hall = prompt.select("Please choose a dining hall:", %w[North South])
+  # hall = "North"
+end
 
 browser = Watir::Browser.new :chrome, headless: true
 
@@ -148,7 +152,7 @@ browser.close
 # puts todays_items
 # puts yesterdays_items
 
-puts Paint["~~~ Different items: ~~~", :faint]
+puts Paint["~~~ Different #{current_meal.downcase} items at #{hall} Dining Hall: ~~~", :faint]
 todays_items.each do |key, items|
   if yesterdays_items.key? key
     new_items = yesterdays_items[key] - items

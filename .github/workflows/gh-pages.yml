@@ -1,0 +1,61 @@
+# Based on https://github.com/middleman/middleman/issues/2289
+name: Run script and deploy to GitHub Pages
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        - name: Setup Pages
+      uses: actions/configure-pages@v3
+      # ----------------------------------------------------Ruby
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .tool-versions
+          bundler-cache: true
+      - name: Ruby version
+        run: |
+          ruby -v
+      - name: Setup Ruby dependencies
+        run: |
+          gem update bundler
+          bundle config set without 'development'
+          bundle install --jobs 4 --retry 3
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        run: chrome --version
+      - name: Install ansifilter
+        run: |
+          curl -O http://www.andre-simon.de/zip/ansifilter-2.19.tar.bz2
+          tar xjf ansifilter-2.19.tar.bz2
+          cd ansifilter-2.19
+          make help
+          make
+          make install
+          make clean
+          ls -la
+          cd
+          ls -la
+      - name: Run script and export HTML file
+        run: |
+          ruby netnutrition-helper.rb North | ./ansifilter-2.19/ansifilter --html -o ./output/index.html
+      # ----------------------------------------------------Deploy
+      # - name: Deploy to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v1.1.0
+      #   if: success()
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     PUBLISH_BRANCH: gh-pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './output'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
