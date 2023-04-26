@@ -41,7 +41,7 @@ jobs:
           cd ansifilter-2.19
           make help
           make
-          make install
+          sudo make install
           make clean
           ls -la
           cd
