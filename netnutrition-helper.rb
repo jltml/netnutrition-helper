@@ -169,4 +169,4 @@ todays_items.each do |key, items|
     end
   end
 end
-puts Paint["as of #{Time.now.strftime("%a %b %l:%M %p)}", :faint, :italic]
+puts Paint["as of #{Time.now.strftime("%a %b %l:%M %p")}", :faint, :italic]
