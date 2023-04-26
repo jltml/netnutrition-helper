@@ -8,6 +8,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.14.2-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.14.2-x86_64-linux)
+      racc (~> 1.4)
     paint (2.3.0)
     parallel (1.22.1)
     parser (3.2.1.1)
@@ -73,6 +75,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   paint (~> 2.3)
