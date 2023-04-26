@@ -46,20 +46,14 @@ jobs:
           ls -la
           cd
           ls -la
-      - name: Run script and export HTML file
+      - name: Run script
         run: |
-          bundle exec ruby netnutrition-helper.rb North | ansifilter --html -o ./output/index.html
+          bundle exec ruby netnutrition-helper.rb North
       # ----------------------------------------------------Deploy
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v1
+      #   with:
+      #     path: './output'
       # - name: Deploy to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v1.1.0
-      #   if: success()
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     PUBLISH_BRANCH: gh-pages
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: './output'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      #   id: deployment
+      #   uses: actions/deploy-pages@v2
