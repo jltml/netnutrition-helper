@@ -28,9 +28,9 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
-      - name: Ruby version
-        run: |
-          ruby -v
+      # - name: Ruby version
+      #   run: |
+      #     ruby -v
       - name: Setup Ruby dependencies
         run: |
           gem update bundler
@@ -38,8 +38,8 @@ jobs:
           bundle install --jobs 4 --retry 3
       # ----------------------------------------------------Chrome
       - uses: browser-actions/setup-chrome@v1
-      - name: Chrome version
-        run: chrome --version
+      # - name: Chrome version
+      #   run: chrome --version
       - name: Install ansifilter
         run: |
           curl -O http://www.andre-simon.de/zip/ansifilter-2.19.tar.bz2
@@ -54,10 +54,10 @@ jobs:
         with:
           timezoneLinux: "America/New_York"
           timezoneMacos: "America/New_York"
-      - name: Run script and export HTML file
+      - name: Run netnutrition-helper.rb and export HTML with ansifilter
         run: |
           mkdir ./output
-          bundle exec ruby netnutrition-helper.rb North | ansifilter --html -o ./output/index.html
+          bundle exec ruby netnutrition-helper.rb North | ansifilter --html -d "NDH Menu Changes" -o ./output/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
